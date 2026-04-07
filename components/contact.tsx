@@ -99,7 +99,7 @@ export function Contact() {
 
     try {
       // Send data to webhook
-      const response = await fetch('https://n8n.rootinize.team/webhook-test/contact-me', {
+      const response = await fetch('https://n8n.rootinize.team/webhook/contact-me', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
