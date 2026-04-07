@@ -1,0 +1,14 @@
+npx shadcn@latest add @react-bits/GradientText-TS-TW
+
+import GradientText from './GradientText'
+
+// For a smoother animation, the gradient should start and end with the same color
+  
+<GradientText
+  colors={["#5227FF","#FF9FFC","#B19EEF"]}
+  animationSpeed={8}
+  showBorder={false}
+  className="custom-class"
+>
+  Add a splash of color!
+</GradientText>
