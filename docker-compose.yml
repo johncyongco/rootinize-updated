@@ -17,7 +17,7 @@ services:
       - Traefik
     labels:
       - traefik.enable=true
-      - traefik.docker.network=Traefik
+      - traefik.docker.network=traefik
       - traefik.http.routers.rootinize.rule=Host(`rootinize.team`) || Host(`www.rootinize.team`)
       - traefik.http.routers.rootinize.entrypoints=websecure
       - traefik.http.routers.rootinize.tls=true
