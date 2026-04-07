@@ -1,25 +1,29 @@
-version: '3.8'
+version: "3.9"
 
 services:
   rootinize:
+    container_name: rootinize-website
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: rootinize-website
     restart: unless-stopped
     environment:
-      - NODE_ENV=production
-      - NEXT_TELEMETRY_DISABLED=1
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.rootinize.rule=Host(`rootinize.team`) || Host(`www.rootinize.team`)"
-      - "traefik.http.routers.rootinize.entrypoints=websecure"
-      - "traefik.http.routers.rootinize.tls.certresolver=myresolver"
-      - "traefik.http.services.rootinize.loadbalancer.server.port=3000"
-      - "traefik.docker.network=traefik"
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    expose:
+      - "3000"
     networks:
-      - traefik
+      - Traefik
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=Traefik
+      - traefik.http.routers.rootinize.rule=Host(`rootinize.team`) || Host(`www.rootinize.team`)
+      - traefik.http.routers.rootinize.entrypoints=websecure
+      - traefik.http.routers.rootinize.tls=true
+      - traefik.http.routers.rootinize.tls.certresolver=letsencrypt
+      - traefik.http.services.rootinize.loadbalancer.server.port=3000
 
 networks:
-  traefik:
+  Traefik:
     external: true
