@@ -42,6 +42,19 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
         <meta name="theme-color" content="#3A2A6C" />
+        
+        {/* Google Analytics Tag */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HRJRTQ2SYQ"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-HRJRTQ2SYQ');
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen antialiased">
         <div className="min-h-screen w-full relative">
