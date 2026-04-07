@@ -111,12 +111,14 @@ export function FAQ() {
                 Schedule a free consultation to discuss your specific needs
               </p>
             </div>
-            <a
-              href="#contact"
-              className="px-8 py-3 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-[#3A2A6C]/25 transition-all duration-300 hover:-translate-y-1 whitespace-nowrap"
-            >
-              Get in Touch
-            </a>
+             <a
+               href="https://cal.com/rootinize/30min"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="px-8 py-3 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-[#3A2A6C]/25 transition-all duration-300 hover:-translate-y-1 whitespace-nowrap"
+             >
+               Get in Touch
+             </a>
           </div>
         </div>
       </div>

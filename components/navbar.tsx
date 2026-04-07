@@ -37,11 +37,11 @@ export function Navbar() {
             href="#" 
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <img 
-              src="/logo.png" 
-              alt="Rootinize" 
-              className="h-8 w-auto"
-            />
+             <img 
+               src="/logo.png" 
+               alt="Rootinize" 
+               className="h-14 w-auto"
+             />
              <span className="text-2xl font-heading text-[#F5F5F2] hidden sm:block">
                Rootinize
              </span>
@@ -61,12 +61,14 @@ export function Navbar() {
                 </a>
               ))}
             </div>
-            <a
-               href="#contact"
-               className="px-6 py-2.5 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#3A2A6C]/20 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              Book a Call
-            </a>
+             <a
+                href="https://cal.com/rootinize/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-2.5 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#3A2A6C]/20 transition-all duration-300 hover:-translate-y-0.5"
+             >
+               Book a Call
+             </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -97,13 +99,15 @@ export function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <a
-                 href="#contact"
-                 onClick={() => setIsOpen(false)}
-                 className="mt-2 px-6 py-3 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-lg text-center hover:shadow-lg hover:shadow-[#3A2A6C]/20 transition-all duration-300"
-              >
-                Book a Call
-              </a>
+               <a
+                  href="https://cal.com/rootinize/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 px-6 py-3 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-lg text-center hover:shadow-lg hover:shadow-[#3A2A6C]/20 transition-all duration-300"
+               >
+                 Book a Call
+               </a>
             </div>
           </div>
         )}

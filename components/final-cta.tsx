@@ -52,25 +52,22 @@ export function FinalCTA() {
 
                  {/* CTA Button */}
                 <div className="pt-4">
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      // In a real app, this would open a calendar booking modal
-                      alert('Booking modal would open here. In production, connect to Cal.com or similar.')
-                    }}
-                     className={cn(
-                      "group inline-flex items-center justify-center gap-3",
-                      "px-10 py-5 rounded-2xl bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white",
-                      "font-semibold text-lg hover:shadow-2xl hover:shadow-[#3A2A6C]/30",
-                      "transition-all duration-300 hover:-translate-y-1",
-                      "animate-fade-up"
-                    )}
-                  >
-                    <Calendar className="h-6 w-6" />
-                    Book Your Strategy Call
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                   <a
+                     href="https://cal.com/rootinize/30min"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                      className={cn(
+                       "group inline-flex items-center justify-center gap-3",
+                       "px-10 py-5 rounded-2xl bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white",
+                       "font-semibold text-lg hover:shadow-2xl hover:shadow-[#3A2A6C]/30",
+                       "transition-all duration-300 hover:-translate-y-1",
+                       "animate-fade-up"
+                     )}
+                   >
+                     <Calendar className="h-6 w-6" />
+                     Book Your Strategy Call
+                     <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                   </a>
                 </div>
 
                   {/* Trust Note */}

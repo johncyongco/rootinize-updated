@@ -54,13 +54,15 @@ export function Hero() {
 
              {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#contact"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-[#3A2A6C]/20 transition-all duration-300 hover:-translate-y-1"
-              >
-                Book Strategy Session
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+               <a
+                 href="https://cal.com/rootinize/30min"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#3A2A6C] to-[#6F86B6] text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-[#3A2A6C]/20 transition-all duration-300 hover:-translate-y-1"
+               >
+                 Book Strategy Session
+                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+               </a>
               <a
                 href="#services"
                 className="inline-flex items-center justify-center px-8 py-4 border border-[#1C1E24] rounded-xl font-semibold text-[#DDDDE3] hover:border-[#6F86B6] hover:bg-[#6F86B6]/5 transition-all duration-300"

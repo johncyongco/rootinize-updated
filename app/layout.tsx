@@ -18,6 +18,16 @@ export const metadata: Metadata = {
   title: 'Rootinize | AI Automation & Development',
   description: 'Transform operations with intelligent automation. Rootinize builds custom AI systems that automate manual processes, deploy chatbots, and create internal tools for businesses ready to scale efficiently.',
   keywords: ['AI automation', 'business automation', 'custom development', 'AI chatbots', 'internal tools'],
+  icons: {
+    icon: [
+      { url: '/logo.png', type: 'image/png' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
+    ],
+    apple: [
+      { url: '/logo.png', type: 'image/png' },
+    ],
+    shortcut: ['/logo.png'],
+  },
 }
 
 export default function RootLayout({
@@ -28,7 +38,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
+        <meta name="theme-color" content="#3A2A6C" />
       </head>
       <body className="min-h-screen antialiased">
         <div className="min-h-screen w-full relative">
