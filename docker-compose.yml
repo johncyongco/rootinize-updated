@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  rootinize:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rootinize-website
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    volumes:
+      - ./public:/app/public:ro
+    networks:
+      - rootinize-network
+
+networks:
+  rootinize-network:
+    driver: bridge
