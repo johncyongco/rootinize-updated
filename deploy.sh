@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Rootinize Website Deployment Script for Hostinger VPS
+# Rootinize Website Deployment Script for Hostinger VPS with Traefik
 # Usage: ./deploy.sh
 
 set -e
 
-echo "🚀 Starting Rootinize website deployment..."
+echo "🚀 Starting Rootinize website deployment with Traefik..."
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
@@ -23,6 +23,12 @@ if ! command -v docker-compose &> /dev/null; then
     # Install Docker Compose
     sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+fi
+
+# Check if Traefik network exists
+if ! docker network ls | grep -q traefik; then
+    echo "⚠️  Traefik network not found. Creating traefik network..."
+    docker network create traefik
 fi
 
 # Create directory structure
@@ -43,14 +49,15 @@ fi
 echo "🐳 Building Docker image..."
 docker-compose build
 
-echo "🚀 Starting Docker containers..."
+echo "🚀 Starting Docker container with Traefik..."
 docker-compose up -d
 
 echo "✅ Deployment complete!"
 echo ""
 echo "📊 Deployment Information:"
-echo "   Website URL: http://localhost:3000"
+echo "   Website URL: https://rootinize.team"
 echo "   Container: rootinize-website"
+echo "   Traefik Network: traefik"
 echo "   Docker Compose: docker-compose.yml"
 echo ""
 echo "🔧 Management Commands:"
@@ -59,26 +66,10 @@ echo "   Stop service: docker-compose down"
 echo "   Restart service: docker-compose restart"
 echo "   Update and redeploy: ./deploy.sh"
 echo ""
-echo "🌐 To make it publicly accessible, configure Nginx:"
-echo "   sudo nano /etc/nginx/sites-available/rootinize"
+echo "🌐 Traefik Configuration:"
+echo "   - Automatic SSL with Let's Encrypt"
+echo "   - Reverse proxy routing"
+echo "   - Host: rootinize.team and www.rootinize.team"
 echo ""
-echo "📝 Nginx configuration example:"
-cat << 'EOF'
-server {
-    listen 80;
-    server_name your-domain.com www.your-domain.com;
-    
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-EOF
-
-echo ""
-echo "🔒 For SSL (HTTPS):"
-echo "   sudo certbot --nginx -d your-domain.com -d www.your-domain.com"
+echo "🔍 Verify Traefik routing:"
+echo "   docker logs traefik 2>/dev/null | grep rootinize || echo 'Check Traefik container logs'"

@@ -1,6 +1,11 @@
-# Docker Deployment for Rootinize Website
+# Docker Deployment for Rootinize Website with Traefik
 
-## 🐳 Quick Start
+## 🐳 Quick Start with Traefik
+
+### Prerequisites:
+- Docker and Docker Compose installed
+- Traefik reverse proxy running on `traefik` network
+- DNS records pointing to your server IP
 
 ### 1. SSH into your Hostinger VPS
 ```bash
@@ -20,7 +25,7 @@ chmod +x deploy.sh
 ```
 /var/www/rootinize/
 ├── Dockerfile              # Docker build configuration
-├── docker-compose.yml      # Docker Compose configuration
+├── docker-compose.yml      # Docker Compose with Traefik labels
 ├── deploy.sh              # Automated deployment script
 ├── app/                   # Next.js application
 ├── components/            # React components
@@ -28,75 +33,56 @@ chmod +x deploy.sh
 └── .env.local            # Environment variables (create this)
 ```
 
-## 🔧 Manual Docker Commands
+## 🔧 Traefik Configuration
 
-### Build and run manually:
+### docker-compose.yml key features:
+```yaml
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.rootinize.rule=Host(`rootinize.team`) || Host(`www.rootinize.team`)"
+  - "traefik.http.routers.rootinize.entrypoints=websecure"
+  - "traefik.http.routers.rootinize.tls.certresolver=myresolver"
+  - "traefik.http.services.rootinize.loadbalancer.server.port=3000"
+  - "traefik.docker.network=traefik"
+```
+
+### Required Traefik setup:
+1. Traefik must be running on the `traefik` network
+2. Let's Encrypt certificate resolver configured in Traefik
+3. DNS records for `rootinize.team` and `www.rootinize.team`
+
+## 🔧 Manual Deployment with Traefik
+
+### 1. Clone repository
 ```bash
-# Clone repository
 git clone https://github.com/johncyongco/rootinize-updated.git
 cd rootinize-updated
-
-# Build Docker image
-docker-compose build
-
-# Start container
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
 ```
 
-### Management commands:
+### 2. Ensure Traefik network exists
 ```bash
-# Stop container
-docker-compose down
+docker network create traefik 2>/dev/null || true
+```
 
-# Restart container
-docker-compose restart
-
-# Update and redeploy
-git pull origin master
+### 3. Build and deploy
+```bash
 docker-compose build
 docker-compose up -d
 ```
 
-## 🌐 Nginx Configuration (Optional)
+## 🚀 Traefik Benefits
+- **Automatic SSL**: Let's Encrypt certificates auto-renewal
+- **Reverse Proxy**: No need for Nginx configuration
+- **Load Balancing**: Built-in load balancing
+- **Service Discovery**: Automatic container discovery
+- **Dashboard**: Web UI for monitoring (if enabled)
 
-Create `/etc/nginx/sites-available/rootinize`:
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com www.your-domain.com;
-    
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
+## 🔧 Management Commands
 
-Enable the site:
+### View container status:
 ```bash
-sudo ln -s /etc/nginx/sites-available/rootinize /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-## 🔒 SSL Certificate (HTTPS)
-```bash
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
-```
-
-## 🐛 Troubleshooting
-
-### Check if container is running:
-```bash
-docker ps
 docker-compose ps
+docker ps | grep rootinize
 ```
 
 ### View logs:
@@ -104,9 +90,38 @@ docker-compose ps
 docker-compose logs -f
 ```
 
-### Check container health:
+### Restart service:
 ```bash
-docker exec -it rootinize-website curl http://localhost:3000
+docker-compose restart
+```
+
+### Update and redeploy:
+```bash
+git pull origin master
+docker-compose build
+docker-compose up -d
+```
+
+### Stop service:
+```bash
+docker-compose down
+```
+
+## 🐛 Troubleshooting
+
+### Check Traefik routing:
+```bash
+docker logs traefik 2>/dev/null | grep rootinize
+```
+
+### Verify container health:
+```bash
+docker exec rootinize-website curl -f http://localhost:3000
+```
+
+### Check network connectivity:
+```bash
+docker network inspect traefik
 ```
 
 ### Rebuild from scratch:
@@ -121,7 +136,7 @@ docker-compose up -d
 
 ### Resource usage:
 ```bash
-docker stats
+docker stats rootinize-website
 ```
 
 ### Container details:
@@ -147,13 +162,26 @@ docker exec -it rootinize-website sh
 2. `docker-compose down`
 3. `docker-compose up -d`
 
+## 🌐 Domain Configuration
+
+### DNS Records:
+```
+A     rootinize.team     → YOUR_VPS_IP
+CNAME www.rootinize.team → rootinize.team
+```
+
+### Traefik Dashboard (if enabled):
+- URL: `https://traefik.your-domain.com`
+- Protected with basic auth
+
 ## 📞 Support
 - Contact: contact@rootinize.team
 - GitHub: https://github.com/johncyongco/rootinize-updated
-- Docker Hub: (Optional) Push to Docker Hub for easier deployment
+- Traefik Docs: https://doc.traefik.io/traefik/
 
 ---
 **Last Updated:** April 8, 2026
 **Docker Version:** 20.10+
+**Traefik Version:** 2.x+
 **Next.js Version:** 14.2.5
-**Status:** Production Ready
+**Status:** Production Ready with Traefik

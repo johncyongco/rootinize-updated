@@ -65,7 +65,7 @@ NEXT_PUBLIC_SITE_URL=https://rootinize.team
 # Add any API keys here
 ```
 
-## 🚀 Deployment to Hostinger VPS
+## 🚀 Deployment to Hostinger VPS with Docker & Traefik
 
 ### 1. Push to GitHub
 ```bash
@@ -74,59 +74,40 @@ git commit -m "Deploy Rootinize website with complete features"
 git push origin master
 ```
 
-### 2. VPS Setup (Hostinger)
+### 2. VPS Setup with Docker & Traefik
 ```bash
 # SSH into your VPS
 ssh user@your-vps-ip
 
-# Install Node.js (if not installed)
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Run automated deployment script
+chmod +x deploy.sh
+./deploy.sh
+```
 
-# Install Git
-sudo apt-get install git
-
+### 3. Manual Docker Deployment (if needed)
+```bash
 # Clone repository
-git clone https://github.com/your-username/rootinize-updated.git
+git clone https://github.com/johncyongco/rootinize-updated.git
 cd rootinize-updated
 
-# Install dependencies
-npm install
+# Ensure Traefik network exists
+docker network create traefik 2>/dev/null || true
 
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# OR use PM2 for process management
-npm install -g pm2
-pm2 start npm --name "rootinize" -- start
-pm2 save
-pm2 startup
+# Build and deploy
+docker-compose build
+docker-compose up -d
 ```
 
-### 3. Nginx Configuration (for Hostinger)
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com www.your-domain.com;
-    
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
+### 4. Traefik Configuration (Automatic)
+- SSL certificates via Let's Encrypt
+- Reverse proxy routing
+- Hosts: `rootinize.team` and `www.rootinize.team`
+- Automatic service discovery
 
-### 4. SSL Certificate (Let's Encrypt)
-```bash
-sudo apt-get install certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+### 5. DNS Configuration
+```
+A     rootinize.team     → YOUR_VPS_IP
+CNAME www.rootinize.team → rootinize.team
 ```
 
 ## 🐛 Known Issues & Testing
