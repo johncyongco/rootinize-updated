@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   rootinize:
     container_name: rootinize-website
@@ -14,10 +12,10 @@ services:
     expose:
       - "3000"
     networks:
-      - Traefik
+      - traefik
     labels:
       - traefik.enable=true
-      - traefik.docker.network=Traefik
+      - traefik.docker.network=traefik
       - traefik.http.routers.rootinize.rule=Host(`rootinize.team`) || Host(`www.rootinize.team`)
       - traefik.http.routers.rootinize.entrypoints=websecure
       - traefik.http.routers.rootinize.tls=true
@@ -25,5 +23,5 @@ services:
       - traefik.http.services.rootinize.loadbalancer.server.port=3000
 
 networks:
-  Traefik:
+  traefik:
     external: true
