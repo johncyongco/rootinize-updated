@@ -25,5 +25,5 @@ services:
       - traefik.http.services.rootinize.loadbalancer.server.port=3000
 
 networks:
-  Traefik:
+  traefik:
     external: true
